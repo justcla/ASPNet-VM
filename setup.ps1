@@ -1,5 +1,9 @@
-Install-WindowsFeature -Name Web-Server
+Install-WindowsFeature -name Web-Server -IncludeManagementTools
+
 Install-WindowsFeature -Name Web-Mgmt-Service
+Set-ItemProperty -Path  HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement  -Value 1
+Set-Service -name WMSVC  -StartupType Automatic
+net start wmsvc
 
 $tempFile = [System.IO.Path]::GetTempFileName() |
     Rename-Item -NewName { $_ -replace 'tmp$', 'exe' } -PassThru
