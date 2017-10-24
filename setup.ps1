@@ -5,7 +5,9 @@ Install-WindowsFeature -name Web-Server -IncludeManagementTools
 Install-WindowsFeature -Name Web-Mgmt-Service
 Set-ItemProperty -Path  HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement -Value 1
 Set-Service -name WMSVC -StartupType Automatic
-net start wmsvc
+if ((Get-Service WMSVC).Status -ne "Running") {
+    net start wmsvc
+}
 
 # Install Web Deploy 3.6
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)
