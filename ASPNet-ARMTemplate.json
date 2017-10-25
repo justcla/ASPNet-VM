@@ -13,14 +13,12 @@
         }
     },
   "variables": {
-    "resourceGroupName": "[resourceGroup().name]",
     "safeVmName": "[toLower(replace(parameters('virtualMachineName'), '-', ''))]",
-    "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
     "virtualMachineSize": "Standard_DS1_v2",
-    "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
+    "virtualNetworkName": "[concat(variables('safeVmName'), '-vnet')]",
     "networkInterfaceName": "[concat(variables('safeVmName'), '-neti')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag')]",
+    "diagnosticsStorageAccountName": "[concat(variables('safeVmName'), 'diag')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountId": "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "addressPrefix": "10.0.5.0/24",
@@ -33,7 +31,7 @@
     "autoShutdownTime": "19:00",
     "autoShutdownTimeZone": "UTC",
     "autoShutdownNotificationStatus": "Disabled",
-    "vnetId": "[resourceId(variables('resourceGroupName'),'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+    "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
   },
   "resources": [
