@@ -1,6 +1,9 @@
 # Install IIS (with Management Console)
 Install-WindowsFeature -name Web-Server -IncludeManagementTools
 
+# Install ASP.NET 4.6
+Install-WindowsFeature Web-Asp-Net45
+
 # Install Web Management Service (enable and start service)
 Install-WindowsFeature -Name Web-Mgmt-Service
 Set-ItemProperty -Path  HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement -Value 1
@@ -16,7 +19,7 @@ Invoke-WebRequest -Uri http://download.microsoft.com/download/0/1/D/01DC28EA-638
 # Prepare a log file name
 $logFile = [System.IO.Path]::GetTempFileName()
 # Prepare the arguments to execute the MSI
-$arguments= '/i ' + $msiFile + 'ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv ' + $logFile
+$arguments= '/i ' + $msiFile + ' ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv ' + $logFile
 # Sample = msiexec /i C:\Users\justin\AppData\Local\Temp\2\tmp9267.msi ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv $logFile
 # Execute the MSI and wait for it to complete
 $proc = (Start-Process -file msiexec -arg $arguments -Passthru)
