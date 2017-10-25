@@ -88,27 +88,29 @@
           }
         }
       },
-      {
-        "name": "CustomScriptExtension",
-        "type": "extensions",
-        "apiVersion": "2015-06-15",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [
-          "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-        ],
-        "properties": {
-          "publisher": "Microsoft.Compute",
-          "type": "CustomScriptExtension",
-          "typeHandlerVersion": "1.8",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": [
-              "https://raw.githubusercontent.com/justcla/ASPNet-VM/master/setup.ps1"
-            ],
-            "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File setup.ps1"
+      "resources": [
+        {
+          "type": "extensions",
+          "name": "CustomScriptExtension",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.8",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "fileUris": [
+                "https://raw.githubusercontent.com/justcla/ASPNet-VM/master/setup.ps1"
+              ],
+              "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File setup.ps1"
+            }
           }
         }
-      }
+      ]
     },
     {
       "name": "[concat('shutdown-computevm-', parameters('virtualMachineName'))]",
