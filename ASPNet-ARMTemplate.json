@@ -18,7 +18,7 @@
     "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
     "virtualMachineSize": "Standard_DS1_v2",
     "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
-    "networkInterfaceName": "[concat(variables('safeVmName'), 'UNQ')]",
+    "networkInterfaceName": "[concat(variables('safeVmName'), 'unique')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
     "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'ds')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
