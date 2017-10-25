@@ -18,9 +18,9 @@
     "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
     "virtualMachineSize": "Standard_DS1_v2",
     "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
-    "networkInterfaceName": "[concat(variables('safeVmName'), '916')]",
+    "networkInterfaceName": "[concat(variables('safeVmName'), 'UNIQUE')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '551')]",
+    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', 'UNIQUE')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountId": "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "addressPrefix": "10.0.5.0/24",
@@ -83,7 +83,7 @@
         "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": true,
-            "storageUri": "[reference(resourceId('SampleASPNet-RG', 'Microsoft.Storage/storageAccounts', variables('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
+            "storageUri": "[reference(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('diagnosticsStorageAccountName')), '2015-06-15').primaryEndpoints['blob']]"
           }
         }
       },
@@ -183,13 +183,13 @@
               },
               "privateIPAllocationMethod": "Dynamic",
               "publicIpAddress": {
-                "id": "[resourceId('SampleASPNet-RG','Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+                "id": "[resourceId(resourceGroup().name,'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
               }
             }
           }
         ],
         "networkSecurityGroup": {
-          "id": "[resourceId('SampleASPNet-RG', 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+          "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
         }
       }
     },
