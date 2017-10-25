@@ -222,6 +222,32 @@
               "destinationAddressPrefix": "*",
               "destinationPortRange": "3389"
             }
+          },
+          {
+            "name": "http",
+            "properties": {
+              "priority": 100,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "80"
+            }
+          },
+          {
+            "name": "WebDeploy",
+            "properties": {
+              "priority": 1010,
+              "protocol": "*",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "8172"
+            }
           }
         ]
       }
