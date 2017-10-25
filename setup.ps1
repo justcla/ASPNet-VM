@@ -20,7 +20,7 @@ Invoke-WebRequest -Uri http://download.microsoft.com/download/0/1/D/01DC28EA-638
 $logFile = [System.IO.Path]::GetTempFileName()
 # Prepare the arguments to execute the MSI
 $arguments= '/i ' + $msiFile + ' ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv ' + $logFile
-# Sample = msiexec /i C:\Users\justin\AppData\Local\Temp\2\tmp9267.msi ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv $logFile
+# Sample = msiexec /i C:\Users\{user}\AppData\Local\Temp\2\tmp9267.msi ADDLOCAL=ALL /qn /norestart LicenseAccepted="0" /lv $logFile
 # Execute the MSI and wait for it to complete
 $proc = (Start-Process -file msiexec -arg $arguments -Passthru)
 $proc | Wait-Process
