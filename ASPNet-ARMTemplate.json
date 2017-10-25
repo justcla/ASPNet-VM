@@ -20,7 +20,7 @@
     "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
     "networkInterfaceName": "[concat(variables('safeVmName'), '-neti')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), '-diag')]",
+    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountId": "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "addressPrefix": "10.0.5.0/24",
