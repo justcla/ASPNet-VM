@@ -2,9 +2,6 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string"
-        },
         "virtualMachineName": {
             "type": "string"
         },
@@ -16,12 +13,11 @@
         }
     },
   "variables": {
-    "resourceGroupName": "[concat(parameters('virtualMachineName'), '-RG')]",
     "safeVmName": "[toLower(replace(parameters('virtualMachineName'), '-', ''))]",
-    "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
+    "safeRgName": "[toLower(replace(resourceGroup().name, '-', ''))]",
     // variables pulled from Azure Portal defaults
     "virtualMachineSize": "Standard_DS1_v2",
-    "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
+    "virtualNetworkName": "[concat(resourceGroup().name, '-vnet')]",
     "networkInterfaceName": "[concat(variables('safeVmName'), '916')]", // TODO: auto-generate 3-digit suffix
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
     "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '557')]", // TODO: auto-generate 3-digit suffix
@@ -38,7 +34,7 @@
     "autoShutdownTimeZone": "UTC",
     "autoShutdownNotificationStatus": "Disabled",
     // original variables from Azure Portal default template (with modified values)
-    "vnetId": "[resourceId(variables('resourceGroupName'),'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+    "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
   },
   "resources": [
@@ -46,7 +42,7 @@
       "name": "[parameters('virtualMachineName')]",
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2016-04-30-preview",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]"
@@ -118,7 +114,7 @@
       "name": "[concat('shutdown-computevm-', parameters('virtualMachineName'))]",
       "type": "Microsoft.DevTestLab/schedules",
       "apiVersion": "2017-04-26-preview",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "status": "[variables('autoShutdownStatus')]",
         "taskType": "ComputeVmShutdownTask",
@@ -140,7 +136,7 @@
       "name": "[variables('diagnosticsStorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "accountType": "[variables('diagnosticsStorageAccountType')]"
       }
@@ -149,7 +145,7 @@
       "name": "[variables('virtualNetworkName')]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2016-12-01",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -170,7 +166,7 @@
       "name": "[variables('networkInterfaceName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2016-09-01",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
         "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
@@ -200,7 +196,7 @@
       "name": "[variables('publicIpAddressName')]",
       "type": "Microsoft.Network/publicIpAddresses",
       "apiVersion": "2017-08-01",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "publicIpAllocationMethod": "[variables('publicIpAddressType')]"
       },
@@ -212,7 +208,7 @@
       "name": "[variables('networkSecurityGroupName')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2017-06-01",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
           {
