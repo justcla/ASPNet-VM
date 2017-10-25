@@ -13,14 +13,14 @@
         }
     },
   "variables": {
-    "resourceGroupName": "SampleASPNet-RG",
+    "resourceGroupName": "[resourceGroup().name]",
     "safeVmName": "[toLower(replace(parameters('virtualMachineName'), '-', ''))]",
     "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
     "virtualMachineSize": "Standard_DS1_v2",
     "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
     "networkInterfaceName": "[concat(variables('safeVmName'), '916')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '557')]",
+    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '551')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountId": "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "addressPrefix": "10.0.5.0/24",
