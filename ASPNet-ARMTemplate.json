@@ -13,14 +13,14 @@
         }
     },
   "variables": {
+    "resourceGroupName": "SampleASPNet-RG",
     "safeVmName": "[toLower(replace(parameters('virtualMachineName'), '-', ''))]",
-    "safeRgName": "[toLower(replace(resourceGroup().name, '-', ''))]",
-    // variables pulled from Azure Portal defaults
+    "safeRgName": "[toLower(replace(variables('resourceGroupName'), '-', ''))]",
     "virtualMachineSize": "Standard_DS1_v2",
-    "virtualNetworkName": "[concat(resourceGroup().name, '-vnet')]",
-    "networkInterfaceName": "[concat(variables('safeVmName'), '916')]", // TODO: auto-generate 3-digit suffix
+    "virtualNetworkName": "[concat(variables('resourceGroupName'), '-vnet')]",
+    "networkInterfaceName": "[concat(variables('safeVmName'), '916')]",
     "networkSecurityGroupName": "[concat(parameters('virtualMachineName'), '-nsg')]",
-    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '557')]", // TODO: auto-generate 3-digit suffix
+    "diagnosticsStorageAccountName": "[concat(variables('safeRgName'), 'diag', '557')]",
     "diagnosticsStorageAccountType": "Standard_LRS",
     "diagnosticsStorageAccountId": "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "addressPrefix": "10.0.5.0/24",
@@ -33,8 +33,7 @@
     "autoShutdownTime": "19:00",
     "autoShutdownTimeZone": "UTC",
     "autoShutdownNotificationStatus": "Disabled",
-    // original variables from Azure Portal default template (with modified values)
-    "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+    "vnetId": "[resourceId(variables('resourceGroupName'),'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
   },
   "resources": [
