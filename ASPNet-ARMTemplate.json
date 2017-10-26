@@ -10,29 +10,6 @@
     },
     "adminPassword": {
       "type": "securestring"
-    },
-    "virtualMachineSize": {
-      "type": "string",
-      "defaultValue": "Standard_DS1_v2",
-      "allowedValues": [ "Standard_DS1_v2", "Standard_DS2_v2", "Standard_DS11_v2" ]
-    },
-    "autoShutdownStatus": {
-      "type": "string",
-      "defaultValue": "Enabled",
-      "allowedValues": [ "Enabled", "Disabled" ]
-    },
-    "autoShutdownTime": {
-      "type": "string",
-      "defaultValue": "19:00"
-    },
-    "autoShutdownTimeZone": {
-      "type": "string",
-      "defaultValue": "UTC"
-    },
-    "autoShutdownNotificationStatus": {
-      "type": "string",
-      "defaultValue": "Disabled",
-      "allowedValues": [ "Enabled", "Disabled" ]
     }
   },
   "variables": {
@@ -50,10 +27,10 @@
     "publicIpAddressName": "[concat(parameters('virtualMachineName'), '-ip')]",
     "publicIpAddressType": "Dynamic",
     "publicIpAddressSku": "Basic",
-    "autoShutdownStatus": "[parameters('autoShutdownStatus')]",
-    "autoShutdownTime": "[parameters('autoShutdownTime')]",
-    "autoShutdownTimeZone": "[parameters('autoShutdownTimeZone')]",
-    "autoShutdownNotificationStatus": "[parameters('autoShutdownNotificationStatus')]",
+    "autoShutdownStatus": "Enabled",
+    "autoShutdownTime": "19:00",
+    "autoShutdownTimeZone": "UTC",
+    "autoShutdownNotificationStatus": "Disabled",
     "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]"
   },
