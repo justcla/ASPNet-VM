@@ -34,38 +34,41 @@ DNS:
 
 # Quick Setup Scripts
 
-[ASP.NET ARM Template]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjustcla%2FASPNet-VM%2Fmaster%2FASPNet-ARMTemplate.json
+[Deploy to Azure Image]: https://camo.githubusercontent.com/9285dd3998997a0835869065bb15e5d500475034/687474703a2f2f617a7572656465706c6f792e6e65742f6465706c6f79627574746f6e2e706e67
+[Deploy to Azure Link]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjustcla%2FASPNet-VM%2Fmaster%2FASPNet-ARMTemplate.json
+[ASP.NET ARM Template]: https://github.com/justcla/ASPNet-VM/blob/master/ASPNet-ARMTemplate.json
 [VM Setup Script]: https://github.com/justcla/ASPNet-VM/blob/master/setup.ps1
 
 <a name="ARMTemplate"></a>
 ## Setup a new VM
 
-Use [this Custom ARM Template][ASP.NET ARM Template] to provision a new VM in Azure that's setup for hosting ASP.NET web apps and publishing from Visual Studio.<br>
-[![Create ASP.NET VM in Azure](https://camo.githubusercontent.com/9285dd3998997a0835869065bb15e5d500475034/687474703a2f2f617a7572656465706c6f792e6e65742f6465706c6f79627574746f6e2e706e67)][ASP.NET ARM Template]
+Use <a href="https://github.com/justcla/ASPNet-VM/blob/master/ASPNet-ARMTemplate.json" target="_blank">this Custom ARM Template</a> to provision a new VM in Azure that's setup for hosting ASP.NET web apps and publishing from Visual Studio.<br>
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjustcla%2FASPNet-VM%2Fmaster%2FASPNet-ARMTemplate.json" target="_blank">![Create ASP.NET VM in Azure][Deploy to Azure Image]</a>
 
 The template will perform the following actions:
 
 * Provision a new Azure Virtual Machine (Windows Server 2016 Datacenter)
-* Configure components and features on the VM (available as [PowerShell script][VM Setup Script])
+* Configure components and features on the VM (available as [PowerShell script](#PowerShellScript))
 * Configure Azure Firewall rules (Ports 80 and 8172)
 
 You just need to provide the following values, and the rest will be generated for you.<br>
 
-Custom template field | How to populate the field
-|
-Subscription | Choose your Azure subscription |
-Location | Accept the default or choose a desired region from the list |
-Resource group	| This is the name of the "virtual folder" that will contain all resources created for this VM.<br>You can delete all the resources created during this process by deleting the resource group.<br><br>Consider a name that is similar to the name of the VM you are creating.<br>
-**Virtual Machine Name** | **This is the name of the virtual machine you are creating.**
-Admin Username | Create an administrator user.<br>*Note: You can use this username when publishing to the VM from Visual Studio. (See article here)*
-Admin Password | Create a password for the new Admin account.<br>**Remember this password. You will need it for publishing to the VM.**
+| Custom template field | How to populate the field |
+|---|---|
+| Subscription | Choose your Azure subscription |
+| Location | Accept the default or choose a desired region from the list |
+| Resource group	| This is the name of the "virtual folder" that will contain all resources created for this VM.<br>You can delete all the resources created during this process by deleting the resource group.<br><br>Consider a name that is similar to the name of the VM you are creating.<br>
+| **Virtual Machine Name** | **This is the name of the virtual machine you are creating.**
+| Admin Username | Create an administrator user.<br>*Note: You can use this username when publishing to the VM from Visual Studio. (See article here)*
+| Admin Password | Create a password for the new Admin account.<br>**Remember this password. You will need it for publishing to the VM.**
 
-***Note:** You will need to manually [configure a DNS name for the VM](http://example.com) in order to use the Microsoft Azure Virtual Machine publishing wizard in Visual Studio.*
+***Note:** You will need to manually [configure a DNS name for the VM](#SetupDNSName) in order to use the Microsoft Azure Virtual Machine publishing wizard in Visual Studio.*
 
 <a name="PowerShellScript"></a>
 ## Patch an existing VM
 
-If you already have an Azure VM, you can download and run [this PowerShell script][VM Setup Script] on the VM to setup the required components.
+If you already have an Azure VM, you can download and run <a href="https://github.com/justcla/ASPNet-VM/blob/master/setup.ps1" target="_blank">this PowerShell script</a> on the VM to setup the required components.
 
 The script will perform the following tasks:  
 * Install IIS (with Management Console)
@@ -105,7 +108,7 @@ $proc | Wait-Process
 Get-Content $logFile
 ```
 
-***Note:** To complete the setup for publishing from Visual Studio, you will need to [setup Azure firewall rules](http://example.com), and [configure a DNS name for the VM](http://example.com). See documentation further below.*
+***Note:** To complete the setup for publishing from Visual Studio, you will need to [setup Azure firewall rules](#ConfigureFirewallRules), and [configure a DNS name for the VM](SetupDNSName). See documentation further below.*
 
 # Walk-through: Create a new Azure VM for hosting your web app 
  
@@ -119,7 +122,7 @@ Here are the steps that we will follow in this post.
  
 <a name="ProvisionNewVM"></a>
 ## Provision a new virtual machine using Azure Portal 
-1. Log in to the Azure portal at https://portal.azure.com 
+1. Log in to the Azure portal at <a href="https://portal.azure.com" target="_blank">https://portal.azure.com</a>  
 2. Click the "+ New" in the top left corner. 
 3. Look for Windows Server 2016 VM (Get Started category)  
    - or any Windows Server 2016 found in "Compute" category. Ie. "Windows Server 2016 Datacenter"
@@ -139,16 +142,13 @@ Here are the steps that we will follow in this post.
     * DS1_V2 will be sufficient for this tutorial
     * The size can be changed later
     * If you have Free Azure Credits (e.g. as a part of you MSDN Subscription), it might cover the costs.
-      * Check your [Visual Studio subscription]. Check for [offers for monthly Azure credit][Check for Azure offers].  
+      - Check your <a href="https://my.visualstudio.com/subscriptions" target="_blank">Visual Studio subscription</a>. Check for <a href="https://azure.microsoft.com/en-us/pricing/member-offers/msdn-benefits-details/" target="_blank">offers for monthly Azure credit</a>.  
     * Note: The costs shown in your Azure portal may differ from the values shown here. Cost is different based on Region and is subject to changes over time.
 6. Accept the defaults in **Step 3: (Settings)**  
 7. Confirm details in Summary and "Purchase".  
    Provisioning will begin, and an icon will appear on Azure Portal dashboard  
    You can watch the progress in the notifications area.  
    Provisioning completes (after about 5 minutes)  
-
-[Visual Studio subscription]: https://my.visualstudio.com/subscriptions
-[Check for Azure offers]: https://azure.microsoft.com/en-us/pricing/member-offers/msdn-benefits-details/
 
 <a name="ConnectToTheVM"></a>
 ## Connect to new virtual machine (Remote Desktop Connection)
@@ -203,7 +203,7 @@ This allows you to download executables via Internet Explorer.
 1. Launch Internet Explorer
 2. Accept default security settings. Note that IE has Enhanced Security disabled.
 3. Navigate to Microsoft Download site to download Web Deploy 3.6  
-   https://www.microsoft.com/en-us/download/details.aspx?id=43717
+   <a href="https://www.microsoft.com/en-us/download/details.aspx?id=43717" target="_blank">https://www.microsoft.com/en-us/download/details.aspx?id=43717</a>
 4. Choose the AMD-64bit version
 5. Allow pop-ups and Run the downloaded MSI
 6. Follow installation steps for Web Deploy 3.6
@@ -231,7 +231,7 @@ This allows you to download executables via Internet Explorer.
 <a name="ConfigureFirewallRules"></a>
 ## Configure Inbound Firewall Rules in the Azure Portal
 
-- Login to the [Azure Portal](http://portal.azure.com) 
+- Login to the <a href="https://portal.azure.com" target="_blank">Azure Portal</a>
 - Open the VM (Virtual Machines->MyAzureVM) 
 - Open the "Networking" section 
 - Create two new firewall entries via "Add inbound port rule"
@@ -243,7 +243,7 @@ This allows you to download executables via Internet Explorer.
 
 To use the in-built web publishing wizard in Visual Studio, you’ll need to configure a DNS name for the virtual machine. This can be done from the Azure Portal.
 
-- From the Azure Portal, navigate to the Overview page of your virtual machine.
+- From the <a href="https://portal.azure.com" target="_blank">Azure Portal</a>, navigate to the Overview page of your virtual machine.
 - Under “DNS name”, click “Configure”
 - Provide a DNS name label that is globally unique.
 - When the name is validated, a green tick will appear.
