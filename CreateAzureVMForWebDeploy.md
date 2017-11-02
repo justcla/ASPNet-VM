@@ -60,7 +60,7 @@ You just need to provide the following values, and the rest will be generated fo
 | Admin Username | Create an administrator user.<br>*Note: You can use this username when publishing to the VM from Visual Studio. (See article here)*
 | Admin Password | Create a password for the new Admin account.<br>**Remember this password. You will need it for publishing to the VM.**
 
-***Note:** You will need to manually [configure a DNS name for the VM](http://example.com) in order to use the Microsoft Azure Virtual Machine publishing wizard in Visual Studio.*
+***Note:** You will need to manually [configure a DNS name for the VM](#SetupDNSName) in order to use the Microsoft Azure Virtual Machine publishing wizard in Visual Studio.*
 
 <a name="PowerShellScript"></a>
 ## Patch an existing VM
@@ -105,7 +105,7 @@ $proc | Wait-Process
 Get-Content $logFile
 ```
 
-***Note:** To complete the setup for publishing from Visual Studio, you will need to [setup Azure firewall rules](http://example.com), and [configure a DNS name for the VM](http://example.com). See documentation further below.*
+***Note:** To complete the setup for publishing from Visual Studio, you will need to [setup Azure firewall rules](#ConfigureFirewallRules), and [configure a DNS name for the VM](SetupDNSName). See documentation further below.*
 
 # Walk-through: Create a new Azure VM for hosting your web app 
  
