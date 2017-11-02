@@ -51,14 +51,14 @@ The template will perform the following actions:
 
 You just need to provide the following values, and the rest will be generated for you.<br>
 
-Custom template field | How to populate the field
-|
-Subscription | Choose your Azure subscription |
-Location | Accept the default or choose a desired region from the list |
-Resource group	| This is the name of the "virtual folder" that will contain all resources created for this VM.<br>You can delete all the resources created during this process by deleting the resource group.<br><br>Consider a name that is similar to the name of the VM you are creating.<br>
-**Virtual Machine Name** | **This is the name of the virtual machine you are creating.**
-Admin Username | Create an administrator user.<br>*Note: You can use this username when publishing to the VM from Visual Studio. (See article here)*
-Admin Password | Create a password for the new Admin account.<br>**Remember this password. You will need it for publishing to the VM.**
+| Custom template field | How to populate the field |
+|---|---|
+| Subscription | Choose your Azure subscription |
+| Location | Accept the default or choose a desired region from the list |
+| Resource group	| This is the name of the "virtual folder" that will contain all resources created for this VM.<br>You can delete all the resources created during this process by deleting the resource group.<br><br>Consider a name that is similar to the name of the VM you are creating.<br>
+| **Virtual Machine Name** | **This is the name of the virtual machine you are creating.**
+| Admin Username | Create an administrator user.<br>*Note: You can use this username when publishing to the VM from Visual Studio. (See article here)*
+| Admin Password | Create a password for the new Admin account.<br>**Remember this password. You will need it for publishing to the VM.**
 
 ***Note:** You will need to manually [configure a DNS name for the VM](http://example.com) in order to use the Microsoft Azure Virtual Machine publishing wizard in Visual Studio.*
 
