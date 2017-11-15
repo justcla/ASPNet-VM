@@ -4,6 +4,9 @@ Install-WindowsFeature -name Web-Server -IncludeManagementTools
 # Install ASP.NET 4.6
 Install-WindowsFeature Web-Asp-Net45
 
+# Delete contents of wwwroot
+Remove-Item -Recurse C:\inetpub\wwwroot\*
+
 # Install Web Management Service (enable and start service)
 Install-WindowsFeature -Name Web-Mgmt-Service
 Set-ItemProperty -Path  HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement -Value 1
